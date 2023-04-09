@@ -1,7 +1,7 @@
 import BuyCryptoForm from '../components/BuyCryptoForm';
 
-function BuyCryptoPage() {
+function BuyCrypto() {
   return <BuyCryptoForm />;
 }
 
-export default BuyCryptoPage;
+export default BuyCrypto;

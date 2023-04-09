@@ -9,7 +9,7 @@ export default function Market() {
   useEffect(() => {
     async function fetchData() {
       const response = await fetch(
-        'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,binancecoin,solana,near,litecoin,cardano&vs_currencies=usd&include_24hr_change=true'
+        'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,binancecoin,solana,near,cardano,dogecoin,matic-network,polkadot,tron,cosmos,fantom,the-sandbox,optimism&vs_currencies=usd&include_24hr_change=true'
       );
       const data = await response.json();
       setCryptoPrices(data);
@@ -28,7 +28,7 @@ export default function Market() {
           <h1>Markets Overview</h1>
         </Col>
       </Row>
-      <Row className="mt-5">
+      <Row className="m-4">
         {Object.entries(cryptoPrices).map(([key, value]) => (
           <CryptoCard key={key} name={key} value={value} />
         ))}

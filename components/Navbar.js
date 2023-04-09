@@ -21,13 +21,23 @@ function Navbar() {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav">
             <li className="nav-item">
-              <Link href="/" className="nav-link">
-                Home
+              <Link href="/UserWallet" className="nav-link">
+                Wallet
               </Link>
             </li>
             <li className="nav-item">
-              <Link href="/buy-crypto" className="nav-link">
+              <Link href="/BuyCrypto" className="nav-link">
                 Buy Crypto
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link href="/Register" className="nav-link">
+                Register
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link href="/Login" className="nav-link">
+                Login
               </Link>
             </li>
           </ul>
