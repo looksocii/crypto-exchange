@@ -1,7 +1,10 @@
+import ProtectedRoute from "../components/ProtectedRoute";
 import BuyCryptoForm from '../components/BuyCryptoForm';
 
+const AuthenticatedBuyCrypto = ProtectedRoute(BuyCryptoForm);
+
 function BuyCrypto() {
-  return <BuyCryptoForm />;
+  return <AuthenticatedBuyCrypto />;
 }
 
 export default BuyCrypto;

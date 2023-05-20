@@ -59,10 +59,12 @@ function BuyCryptoForm() {
                 disabled
               />
             </Form.Group>
-
-            <div className="d-grid">
-              <Button className="mt-4" variant="dark" size="lg" type="submit">
-                Buy
+            <div className="mt-4 d-grid gap-2">
+              <Button variant="success" size="lg">
+                BUY / LONG
+              </Button>
+              <Button variant="danger" size="lg">
+                SELL / SHORT
               </Button>
             </div>
           </Form>

@@ -1,5 +1,7 @@
 import { useState } from "react";
+import { useRouter } from 'next/router';
 import { Container, Form, Button, Row, Col } from "react-bootstrap";
+import axios from 'axios';
 
 const RegisterPage = () => {
   const [username, setUsername] = useState("");
@@ -7,6 +9,9 @@ const RegisterPage = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [error, setError] = useState(null);
+
+  const router = useRouter();
 
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
@@ -28,13 +33,26 @@ const RegisterPage = () => {
     setLastName(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Username:", username);
-    console.log("Password:", password);
-    console.log("Confirm Password:", confirmPassword);
-    console.log("First Name:", firstName);
-    console.log("Last Name:", lastName);
+    if (password == confirmPassword){
+      try {
+        const response = await axios.post('http://localhost:4000/api/register', {
+          username: username,
+          password: password,
+          first_name: firstName,
+          last_name: lastName
+        })
+        router.push('/Login');
+      } catch (error) {
+        setError(error.message);
+      }
+    }
+    else{
+      setPassword("");
+      setConfirmPassword("");
+      setError("Password & Confirm Password do not match.");
+    }
   };
 
   return (
@@ -52,27 +70,27 @@ const RegisterPage = () => {
           <Form onSubmit={handleSubmit}>
             <Form.Group>
               <Form.Label>First Name</Form.Label>
-              <Form.Control type="text" placeholder="First Name" value={firstName} onChange={handleFirstNameChange} />
+              <Form.Control type="text" placeholder="First Name" value={firstName} onChange={handleFirstNameChange} required />
             </Form.Group>
 
             <Form.Group className="mt-2">
               <Form.Label>Last Name</Form.Label>
-              <Form.Control type="text" placeholder="Last Name" value={lastName} onChange={handleLastNameChange} />
+              <Form.Control type="text" placeholder="Last Name" value={lastName} onChange={handleLastNameChange} required />
             </Form.Group>
 
             <Form.Group className="mt-2">
               <Form.Label>Username</Form.Label>
-              <Form.Control type="text" placeholder="Enter Username" value={username} onChange={handleUsernameChange} />
+              <Form.Control type="text" placeholder="Enter Username" value={username} onChange={handleUsernameChange} required />
             </Form.Group>
 
             <Form.Group className="mt-2">
               <Form.Label>Password</Form.Label>
-              <Form.Control type="password" placeholder="Password" value={password} onChange={handlePasswordChange} />
+              <Form.Control type="password" placeholder="Password" value={password} onChange={handlePasswordChange} required />
             </Form.Group>
 
             <Form.Group className="mt-2">
               <Form.Label>Confirm Password</Form.Label>
-              <Form.Control type="password" placeholder="Confirm Password" value={confirmPassword} onChange={handleConfirmPasswordChange} />
+              <Form.Control type="password" placeholder="Confirm Password" value={confirmPassword} onChange={handleConfirmPasswordChange} required />
             </Form.Group>
 
             <div className="d-grid">
@@ -80,6 +98,7 @@ const RegisterPage = () => {
                 Submit
               </Button>
             </div>
+            {error && <div className="text-danger text-center mt-2">{error}</div>}
           </Form>
         </Col>
         <Col></Col>

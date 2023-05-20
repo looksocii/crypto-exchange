@@ -1,7 +1,10 @@
+import ProtectedRoute from "../components/ProtectedRoute";
 import Wallet from '../components/Wallet';
 
+const AuthenticatedUserWallet = ProtectedRoute(Wallet);
+
 function UserWallet() {
-  return <Wallet />;
+  return <AuthenticatedUserWallet />;
 }
 
 export default UserWallet;

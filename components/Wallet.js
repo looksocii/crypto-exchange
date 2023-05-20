@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { Container, Row, Col, Card } from 'react-bootstrap';
-// import axios from 'axios';
 
 const Wallet = () => {
   const [user, setUser] = useState({});

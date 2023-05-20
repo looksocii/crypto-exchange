@@ -1,22 +1,39 @@
 import { useState } from "react";
+import { useRouter } from 'next/router';
 import { Container, Form, Button, Row, Col } from "react-bootstrap";
+import axios from 'axios';
+import { setAuthToken } from '../utils/Authentication';
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState(null);
+  const router = useRouter();
 
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const response = await axios.post('http://localhost:4000/api/login', {
+        username: username,
+        password: password
+      })
+
+      // User Login
+      setAuthToken(response.data.token);
+      router.push('/UserWallet');
+
+    } catch (error) {
+      setPassword("");
+      setError(error.response.data.error);
+    }
+  };
+
+  const handleUsernameChange = (e) => {
+    setUsername(e.target.value);
   };
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Email:", email);
-    console.log("Password:", password);
   };
 
   return (
@@ -34,19 +51,20 @@ const Login = () => {
           <Form onSubmit={handleSubmit}>
             <Form.Group>
               <Form.Label>Username</Form.Label>
-              <Form.Control type="text" placeholder="Enter Username" value={email} onChange={handleEmailChange} />
+              <Form.Control type="text" placeholder="Enter Username" value={username} onChange={handleUsernameChange} required />
             </Form.Group>
 
-            <Form.Group className="mt-3">
+            <Form.Group className="mt-2">
               <Form.Label>Password</Form.Label>
-              <Form.Control type="password" placeholder="Enter Password" value={password} onChange={handlePasswordChange} />
+              <Form.Control type="password" placeholder="Enter Password" value={password} onChange={handlePasswordChange} required />
             </Form.Group>
 
-            <div className="d-grid">
-              <Button className="mt-4" variant="dark" size="lg" type="submit">
+            <div className="d-grid mt-4">
+              <Button variant="dark" size="lg" type="submit">
                 Login
               </Button>
             </div>
+            {error && <div className="text-danger text-center mt-2">{error}</div>}
           </Form>
         </Col>
         <Col></Col>

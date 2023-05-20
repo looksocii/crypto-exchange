@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { isAuthenticated } from '../utils/Authentication';
 
 function Navbar() {
   return (
@@ -30,16 +31,29 @@ function Navbar() {
                 Buy Crypto
               </Link>
             </li>
+            
+            {isAuthenticated() ? (
+                <li className="nav-item"></li>
+              ) : (
+                <li className="nav-item">
+                  <Link href="/Register" className="nav-link">
+                    Register
+                  </Link>
+                </li>
+            )}
+
             <li className="nav-item">
-              <Link href="/Register" className="nav-link">
-                Register
-              </Link>
+              {isAuthenticated() ? (
+                <Link href="/Logout" className="nav-link">
+                  Logout
+                </Link>
+              ) : (
+                <Link href="/Login" className="nav-link">
+                  Login
+                </Link>
+              )}
             </li>
-            <li className="nav-item">
-              <Link href="/Login" className="nav-link">
-                Login
-              </Link>
-            </li>
+
           </ul>
         </div>
       </div>

@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Navbar from '../components/Navbar';
 
-function MyApp({ Component, pageProps }) {
+function App({ Component, pageProps }) {
   return (
     <>
       <Navbar />
@@ -10,4 +10,4 @@ function MyApp({ Component, pageProps }) {
   );
 }
 
-export default MyApp;
+export default App;
